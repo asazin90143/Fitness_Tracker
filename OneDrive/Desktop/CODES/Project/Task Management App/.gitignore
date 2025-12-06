@@ -1,0 +1,31 @@
+# Node
+node_modules/
+npm-debug.log*
+pnpm-lock.yaml
+package-lock.json
+
+# Env
+.env
+.env.*
+
+# OS / Editor
+/.vscode/
+AppData/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# VSCode extensions (packed)
+.vscode/extensions/
+
+# OneDrive and system temp
+OneDrive/
+**/Application Data/
+
+# Build outputs
+.next/
+dist/
+out/
+
+# Logs
+*.log
