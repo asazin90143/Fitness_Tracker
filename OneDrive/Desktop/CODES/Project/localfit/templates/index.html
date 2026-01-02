@@ -73,21 +73,21 @@
         type: 'line',
         data: {
             labels: {{ chart_dates | safe }},
-    datasets: [{
-        label: 'Body Weight',
-        data: {{ chart_weights | safe }},
-        borderColor: 'rgb(37, 99, 235)',
-        backgroundColor: 'rgba(37, 99, 235, 0.1)',
-        tension: 0.3,
-        fill: true
+            datasets: [{
+                label: 'Body Weight',
+                data: {{ chart_weights | safe }},
+                borderColor: 'rgb(37, 99, 235)',
+                backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                tension: 0.3,
+                fill: true
             }]
         },
-    options: {
-        responsive: true,
+        options: {
+            responsive: true,
             scales: {
-            y: { beginAtZero: false }
+                y: { beginAtZero: false }
+            }
         }
-    }
     });
 </script>
 {% endblock %}

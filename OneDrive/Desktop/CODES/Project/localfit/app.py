@@ -49,29 +49,35 @@ def index():
 @app.route('/add/body', methods=['GET', 'POST'])
 def add_body():
     if request.method == 'POST':
-        new_entry = BodyMeasurement(
-            date=datetime.strptime(request.form['date'], '%Y-%m-%d').date(),
-            weight=float(request.form['weight']),
-            waist=float(request.form['waist'])
-        )
-        db.session.add(new_entry)
-        db.session.commit()
-        return redirect(url_for('index'))
+        try:
+            new_entry = BodyMeasurement(
+                date=datetime.strptime(request.form['date'], '%Y-%m-%d').date(),
+                weight=float(request.form['weight']),
+                waist=float(request.form['waist'])
+            )
+            db.session.add(new_entry)
+            db.session.commit()
+            return redirect(url_for('index'))
+        except (ValueError, KeyError) as e:
+            return render_template('add_measurement.html', today=datetime.now().date(), error=str(e))
     return render_template('add_measurement.html', today=datetime.now().date())
 
 @app.route('/add/workout', methods=['GET', 'POST'])
 def add_workout():
     if request.method == 'POST':
-        new_workout = Workout(
-            date=datetime.strptime(request.form['date'], '%Y-%m-%d').date(),
-            exercise_name=request.form['exercise'],
-            sets=int(request.form['sets']),
-            reps=int(request.form['reps']),
-            weight_load=float(request.form['load'])
-        )
-        db.session.add(new_workout)
-        db.session.commit()
-        return redirect(url_for('index'))
+        try:
+            new_workout = Workout(
+                date=datetime.strptime(request.form['date'], '%Y-%m-%d').date(),
+                exercise_name=request.form['exercise'],
+                sets=int(request.form['sets']),
+                reps=int(request.form['reps']),
+                weight_load=float(request.form['load'])
+            )
+            db.session.add(new_workout)
+            db.session.commit()
+            return redirect(url_for('index'))
+        except (ValueError, KeyError) as e:
+            return render_template('add_workout.html', today=datetime.now().date(), error=str(e))
     return render_template('add_workout.html', today=datetime.now().date())
 
 # --- Initialization ---
