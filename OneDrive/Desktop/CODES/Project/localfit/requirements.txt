@@ -1,12 +1,2 @@
-Create the following folder and file structure:
-/localfit
-  ├── app.py
-  ├── requirements.txt
-  └── /templates
-       ├── base.html
-       ├── index.html
-       ├── add_measurement.html
-       └── add_workout.html
-
 Flask==3.0.0
 Flask-SQLAlchemy==3.1.1
