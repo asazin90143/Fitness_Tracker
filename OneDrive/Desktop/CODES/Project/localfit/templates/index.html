@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <div class="bg-white p-6 rounded-lg shadow-md col-span-1 md:col-span-2">
+        <h2 class="text-xl font-bold mb-4">Weight Progress (lbs/kg)</h2>
+        <canvas id="weightChart" height="100"></canvas>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold mb-4 flex justify-between">
+            Recent Measurements
+            <a href="/add/body" class="text-sm text-blue-500 hover:underline">Log New</a>
+        </h2>
+        <table class="w-full text-left">
+            <thead>
+                <tr class="border-b">
+                    <th class="py-2">Date</th>
+                    <th class="py-2">Weight</th>
+                    <th class="py-2">Waist</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in recent_body %}
+                <tr class="border-b last:border-0">
+                    <td class="py-2">{{ log.date }}</td>
+                    <td class="py-2">{{ log.weight }}</td>
+                    <td class="py-2">{{ log.waist }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="py-4 text-gray-500">No data yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold mb-4 flex justify-between">
+            Recent Workouts
+            <a href="/add/workout" class="text-sm text-blue-500 hover:underline">Log New</a>
+        </h2>
+        <table class="w-full text-left">
+            <thead>
+                <tr class="border-b">
+                    <th class="py-2">Date</th>
+                    <th class="py-2">Exercise</th>
+                    <th class="py-2">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in recent_workouts %}
+                <tr class="border-b last:border-0">
+                    <td class="py-2">{{ log.date }}</td>
+                    <td class="py-2 font-medium">{{ log.exercise_name }}</td>
+                    <td class="py-2 text-sm text-gray-600">{{ log.sets }}x{{ log.reps }} @ {{ log.weight_load }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="py-4 text-gray-500">No workouts yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('weightChart').getContext('2d');
+    const weightChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ chart_dates | safe }},
+            datasets: [{
+                label: 'Body Weight',
+                data: {{ chart_weights | safe }},
+                borderColor: 'rgb(37, 99, 235)',
+                backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: false }
+            }
+        }
+    });
+</script>
+{% endblock %}
