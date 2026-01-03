@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+instance/
+*.db
+.vscode/
+venv/
+.env
+localfit.db
+/.idea/
+*.egg-info/
+.DS_Store
+node_modules/
