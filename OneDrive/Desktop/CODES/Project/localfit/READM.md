@@ -1,23 +1,4 @@
-# LocalFit Tracker (MVP)
-
-![Status](https://img.shields.io/badge/Status-Stable-success)
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Privacy](https://img.shields.io/badge/Privacy-100%25%20Local-red)
-
-**LocalFit** is a lightweight, privacy-focused web application designed to track body measurements and workout progress. It runs entirely on your local machine—no cloud servers, no subscriptions, and zero latency.
-
-> **Philosophy:** Your health data belongs to you. LocalFit stores everything in a local SQLite database, ensuring you have complete ownership and instant access to your history without needing an internet connection.
-
----
-
-## ⚡ Getting Started
-
-Follow these instructions to get the project running on your local machine in under 2 minutes.
-
-### 1. Prerequisites
-
-Ensure you have the following installed:
+This file was replaced by `README.md`. See `README.md` for project instructions.
 
 * **Python 3.8+** ([Download Here](https://www.python.org/downloads/))
 * **Git** (Optional, if cloning)
