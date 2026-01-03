@@ -49,35 +49,45 @@ def index():
 @app.route('/add/body', methods=['GET', 'POST'])
 def add_body():
     if request.method == 'POST':
+        date_str = request.form.get('date')
+        weight_str = request.form.get('weight')
+        waist_str = request.form.get('waist')
+        if not date_str or not weight_str or not waist_str:
+            return render_template('add_measurement.html', today=datetime.now().date(), error='All fields are required')
         try:
-            new_entry = BodyMeasurement(
-                date=datetime.strptime(request.form['date'], '%Y-%m-%d').date(),
-                weight=float(request.form['weight']),
-                waist=float(request.form['waist'])
-            )
+            new_entry = BodyMeasurement()
+            new_entry.date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            new_entry.weight = float(weight_str)
+            new_entry.waist = float(waist_str)
             db.session.add(new_entry)
             db.session.commit()
             return redirect(url_for('index'))
-        except (ValueError, KeyError) as e:
-            return render_template('add_measurement.html', today=datetime.now().date(), error=str(e))
+        except ValueError as e:
+            return render_template('add_measurement.html', today=datetime.now().date(), error=f'Invalid input: {e}')
     return render_template('add_measurement.html', today=datetime.now().date())
 
 @app.route('/add/workout', methods=['GET', 'POST'])
 def add_workout():
     if request.method == 'POST':
+        date_str = request.form.get('date')
+        exercise = request.form.get('exercise')
+        sets_str = request.form.get('sets')
+        reps_str = request.form.get('reps')
+        load_str = request.form.get('load')
+        if not date_str or not exercise or not sets_str or not reps_str or not load_str:
+            return render_template('add_workout.html', today=datetime.now().date(), error='All fields are required')
         try:
-            new_workout = Workout(
-                date=datetime.strptime(request.form['date'], '%Y-%m-%d').date(),
-                exercise_name=request.form['exercise'],
-                sets=int(request.form['sets']),
-                reps=int(request.form['reps']),
-                weight_load=float(request.form['load'])
-            )
+            new_workout = Workout()
+            new_workout.date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            new_workout.exercise_name = exercise
+            new_workout.sets = int(sets_str)
+            new_workout.reps = int(reps_str)
+            new_workout.weight_load = float(load_str)
             db.session.add(new_workout)
             db.session.commit()
             return redirect(url_for('index'))
-        except (ValueError, KeyError) as e:
-            return render_template('add_workout.html', today=datetime.now().date(), error=str(e))
+        except ValueError as e:
+            return render_template('add_workout.html', today=datetime.now().date(), error=f'Invalid input: {e}')
     return render_template('add_workout.html', today=datetime.now().date())
 
 # --- Initialization ---

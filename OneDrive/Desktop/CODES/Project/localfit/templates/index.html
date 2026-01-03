@@ -67,15 +67,19 @@
     </div>
 </div>
 
+<div id="chart-data" data-dates='{{ chart_dates | safe }}' data-weights='{{ chart_weights | safe }}' style="display:none"></div>
 <script>
+    const chartDataEl = document.getElementById('chart-data');
+    const chartDates = JSON.parse(chartDataEl.dataset.dates || '[]');
+    const chartWeights = JSON.parse(chartDataEl.dataset.weights || '[]');
     const ctx = document.getElementById('weightChart').getContext('2d');
     const weightChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: {{ chart_dates | safe }},
+            labels: chartDates,
             datasets: [{
                 label: 'Body Weight',
-                data: {{ chart_weights | safe }},
+                data: chartWeights,
                 borderColor: 'rgb(37, 99, 235)',
                 backgroundColor: 'rgba(37, 99, 235, 0.1)',
                 tension: 0.3,
